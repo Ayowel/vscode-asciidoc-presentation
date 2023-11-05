@@ -17,6 +17,7 @@ kroki.register(asciidoctor.Extensions)
 export type AsciidocAttributes = {
     title: string,
     imageDir: string,
+    customcss: string,
     revealJsTheme: string,
     revealJsCustomTheme?: string,
     hightlightJsTheme: string,
@@ -25,6 +26,7 @@ export type AsciidocAttributes = {
 export type RevealConfiguration = {
     absolutePath: string,
     title: string,
+    customcss: string,
     themeCss: string,
     hightlightJsThemeCss: string,
     isInlined: boolean
@@ -66,28 +68,27 @@ export class RevealSlides {
         return asciidoctor.convert(asciidocText, { safe: 'safe', backend: 'revealjs', attributes: {docDir: this.absoluteDocumentDirectory}}) as string
     }
 
-    private extractAsciidocAttributes(asciidocText: string) {
+    private extractAsciidocAttributes(asciidocText: string): AsciidocAttributes {
         const accessor = docAccessor(asciidocText, this.absoluteDocumentDirectory)
-        
-        const attributes = {
+        return {
             ...accessor.getFullAttributes(),
             title: accessor.getTitle(),
             imageDir: accessor.getAttributeOrDefault('imagesdir', ''),
+            customcss: accessor.getAttributeOrDefault('customcss', 'asciidoctor-revealjs.css'),
             revealJsTheme: accessor.getAttributeOrDefault('revealjs_theme', 'night'),
             revealJsCustomTheme: accessor.getAttributeOrDefault('revealjs_customtheme', undefined),
-            hightlightJsTheme: accessor.getAttributeOrDefault('hightlightjs-theme', 'monokai')
+            hightlightJsTheme: accessor.getAttributeOrDefault('hightlightjs-theme', 'monokai'),
         }
-
-        return attributes
     }
 
-    private extractRevealConfiguration(asciidocAttributes: AsciidocAttributes) {
+    private extractRevealConfiguration(asciidocAttributes: AsciidocAttributes) : RevealConfiguration {
         return {
             absolutePath: '',
             title: asciidocAttributes.title,
+            customcss: asciidocAttributes.customcss,
             themeCss: asciidocAttributes.revealJsCustomTheme ? asciidocAttributes.revealJsCustomTheme : `libs/reveal.js/css/theme/${asciidocAttributes.revealJsTheme}.css`,
             hightlightJsThemeCss: `libs/highlight.js/styles/${asciidocAttributes.hightlightJsTheme}.css`,
-            isInlined: false
+            isInlined: false,
         }
     }
 
