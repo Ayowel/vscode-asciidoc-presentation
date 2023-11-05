@@ -4,6 +4,15 @@
         hash: true,
         history: true,
         pdfMaxPagesPerSlide: 1,
+        center: 'true' === '<%= center %>',
+        controls: 'true' === '<%= controls %>',
+        controlsLayout: '<%= controlsLayout %>',
+        controlsBackArrows: '<%= controlsBackArrows %>',
+        progress: 'true' === '<%= progress %>',
+        transition: '<%= transition %>',
+        transitionSpeed: '<%= transitionSpeed %>',
+        backgroundTransition: '<%= backgroundTransition %>',
+        slideNumber: ['true', 'false'].includes('<%- slideNumber %>') ? '<%- slideNumber %>' === 'true' : '<%- slideNumber %>',
         dependencies: [
             { src: '<%= absolutePath %>libs/reveal.js/plugin/notes/notes.js', async: true },
             { src: '<%= absolutePath %>libs/reveal.js/plugin/zoom-js/zoom.js', async: true },
@@ -18,6 +27,15 @@
     Reveal.initialize({
         hash: true,
         history: true,
+        center: 'true' === '<%= center %>',
+        controls: 'true' === '<%= controls %>',
+        controlsLayout: '<%= controlsLayout %>',
+        controlsBackArrows: '<%= controlsBackArrows %>',
+        progress: 'true' === '<%= progress %>',
+        transition: '<%= transition %>',
+        transitionSpeed: '<%= transitionSpeed %>',
+        backgroundTransition: '<%= backgroundTransition %>',
+        slideNumber: ['true', 'false'].includes('<%- slideNumber %>') ? '<%- slideNumber %>' === 'true' : '<%- slideNumber %>',
         dependencies: [
             { src: '<%= absolutePath %>libs/reveal.js/plugin/notes/notes.js', async: true } 
         ]

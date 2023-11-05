@@ -16,28 +16,50 @@ kroki.register(asciidoctor.Extensions)
 
 export type AsciidocAttributes = {
     title: string,
+    authors: string,
+    revdate: string,
     imageDir: string,
     customcss: string,
     revealJsTheme: string,
-    revealJsCustomTheme?: string,
+    revealJsCustomTheme: string | undefined,
+    revealJsSlideNumber: string,
+    revealJsCenter: string,
+    revealJsControls: string,
+    revealJsControlsLayout: string,
+    revealJsControlsBackArrows: string,
+    revealJsProgress: string,
     hightlightJsTheme: string,
+    revealJsTransition: string,
+    revealJsTransitionSpeed: string,
+    revealJsBackgroundTransition: string,
 }
 
 export type RevealConfiguration = {
     absolutePath: string,
     title: string,
+    authors: string,
+    revdate: string,
     customcss: string,
     themeCss: string,
+    slideNumber: string,
+    center: string,
+    controls: string,
+    controlsLayout: string,
+    controlsBackArrows: string,
+    progress: string,
     hightlightJsThemeCss: string,
-    isInlined: boolean
+    isInlined: boolean,
+    transition: string,
+    transitionSpeed: string,
+    backgroundTransition: string,
 }
 
 function docAccessor(asciidocText: string, docDir: string) {
 
     const doc = asciidoctor.load(asciidocText, {safe: 'safe', header_footer: true, attributes: {docDir}})
     return {
-        getAttributeOrDefault: (key: string, defaultValue?: string) => {
-            return doc.hasAttribute(key) ? doc.getAttribute(key) : defaultValue
+        getAttributeOrDefault: <T>(key: string, defaultValue?: T): T|string => {
+            return doc.getAttribute(key.toLowerCase(), defaultValue)
         },
         getTitle: () => {
             return doc.getTitle()
@@ -77,7 +99,16 @@ export class RevealSlides {
             customcss: accessor.getAttributeOrDefault('customcss', 'asciidoctor-revealjs.css'),
             revealJsTheme: accessor.getAttributeOrDefault('revealjs_theme', 'night'),
             revealJsCustomTheme: accessor.getAttributeOrDefault('revealjs_customtheme', undefined),
+            revealJsCenter: accessor.getAttributeOrDefault('revealjs_center', 'true'),
+            revealJsControls: accessor.getAttributeOrDefault('revealjs_controls', 'true'),
+            revealJsControlsLayout: accessor.getAttributeOrDefault('revealjs_controlslayout', 'bottom-right'),
+            revealJsControlsBackArrows: accessor.getAttributeOrDefault('revealjs_controlsbackarrows', 'faded'),
+            revealJsProgress: accessor.getAttributeOrDefault('revealjs_progress', 'false'),
+            revealJsSlideNumber: accessor.getAttributeOrDefault('revealjs_slideNumber', 'false'),
             hightlightJsTheme: accessor.getAttributeOrDefault('hightlightjs-theme', 'monokai'),
+            revealJsTransition: accessor.getAttributeOrDefault('revealjs_transition', "slide"),
+            revealJsTransitionSpeed: accessor.getAttributeOrDefault('revealjs_transitionspeed', "default"),
+            revealJsBackgroundTransition: accessor.getAttributeOrDefault('revealjs_backgroundtransition', "fade"),
         }
     }
 
@@ -85,9 +116,20 @@ export class RevealSlides {
         return {
             absolutePath: '',
             title: asciidocAttributes.title,
+            authors : asciidocAttributes.authors,
+            revdate : asciidocAttributes.revdate,
+            slideNumber: asciidocAttributes.revealJsSlideNumber,
+            center : asciidocAttributes.revealJsCenter,
+            controls: asciidocAttributes.revealJsControls,
+            controlsLayout: asciidocAttributes.revealJsControlsLayout,
+            controlsBackArrows: asciidocAttributes.revealJsControlsBackArrows,
+            progress : asciidocAttributes.revealJsProgress,
             customcss: asciidocAttributes.customcss,
             themeCss: asciidocAttributes.revealJsCustomTheme ? asciidocAttributes.revealJsCustomTheme : `libs/reveal.js/css/theme/${asciidocAttributes.revealJsTheme}.css`,
             hightlightJsThemeCss: `libs/highlight.js/styles/${asciidocAttributes.hightlightJsTheme}.css`,
+            transition: asciidocAttributes.revealJsTransition,
+            transitionSpeed: asciidocAttributes.revealJsTransitionSpeed,
+            backgroundTransition:asciidocAttributes.revealJsBackgroundTransition,
             isInlined: false,
         }
     }
