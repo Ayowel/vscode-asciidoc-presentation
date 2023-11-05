@@ -42,7 +42,7 @@ export class RevealServer {
         this.app.on('error', err => console.error(err))
         this.server = this.app.listen()
 
-        logger(`asciidoc slides server started at ${this.serverUrl}`)
+        logger(`asciidoc presentation server started at ${this.serverUrl}`)
     }
 
     private async handler (ctx: Koa.Context, next: Koa.Next) {
@@ -131,7 +131,7 @@ export class RevealServer {
     }
 
     public shutdown() {
-        this.logger('asciidoc slides server shutdown')
+        this.logger('asciidoc presentation server shutdown')
         this.server.close()
     }
 }
