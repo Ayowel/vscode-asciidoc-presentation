@@ -97,6 +97,7 @@
 		"open": "^9.1.0",
 		"reveal.js": "^5.0.1",
 		"slash": "^5.1.0",
-		"web-resource-inliner": "^6.0.1"
+		"web-resource-inliner": "^6.0.1",
+		"ws": "^8.14.2"
 	}
 }
