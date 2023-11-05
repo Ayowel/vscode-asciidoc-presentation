@@ -8,7 +8,7 @@ import * as vscode from 'vscode'
  * have already required('opal-runtime') or required('asciidoctor.js') or similar
  * and thereby already bridged opal.
  *  */
-const asciidoctor = ((<any>global).Opal && (<any>global).Opal.Asciidoctor) || require('@asciidoctor/core')()
+const asciidoctor: Asciidoctor = ((<any>global).Opal && (<any>global).Opal.Asciidoctor) || require('@asciidoctor/core')()
 const asciidoctorRevealjs = require('@asciidoctor/reveal.js')
 const kroki = require("asciidoctor-kroki")
 asciidoctorRevealjs.register()
@@ -32,7 +32,7 @@ export type RevealConfiguration = {
 
 function docAccessor(asciidocText: string, docDir: string) {
 
-    const doc: Asciidoctor.Document = asciidoctor.load(asciidocText, {safe: 'safe', header_footer: true, attributes: {docDir}})
+    const doc = asciidoctor.load(asciidocText, {safe: 'safe', header_footer: true, attributes: {docDir}})
     return {
         getAttributeOrDefault: (key: string, defaultValue?: string) => {
             return doc.hasAttribute(key) ? doc.getAttribute(key) : defaultValue
@@ -92,7 +92,7 @@ export class RevealSlides {
     }
 
     private getSlideIdUnderCursor (asciidocText: string, lineNumber: number) {    
-        const doc = asciidoctor.load(asciidocText, {safe: 'safe', header_footer: true, sourcemap: true}) as Asciidoctor.Document
+        const doc = asciidoctor.load(asciidocText, {safe: 'safe', header_footer: true, sourcemap: true})
 
         try{
             const sections = doc.getSections()

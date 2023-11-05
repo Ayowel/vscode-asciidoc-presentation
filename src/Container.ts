@@ -44,7 +44,7 @@ export class Container {
                 const resp = await Axios.get(this.server.exportUrl)
                 fs.writeFileSync(targetFile, resp.data)
                 vscode.window.showInformationMessage(`Exported slides as html to file: ${targetFile}`)
-            } catch (e) {
+            } catch (e: any) {
                 vscode.window.showErrorMessage(`Error while exporting: ${e.message}`)
             }
         }
@@ -57,7 +57,7 @@ export class Container {
                 const inlinedHtml = await this.inline(resp.data)
                 fs.writeFileSync(targetFile, inlinedHtml)
                 vscode.window.showInformationMessage(`Exported slides as inlined html to file: ${targetFile}`)
-            } catch (e) {
+            } catch (e: any) {
                 vscode.window.showErrorMessage(`Error while exporting: ${e.message}`)
             }
         }

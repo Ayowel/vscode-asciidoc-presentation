@@ -4,7 +4,7 @@ import * as render from 'koa-ejs'
 import * as favicon from 'koa-favicon'
 import * as koalogger from 'koa-logger'
 import * as send from 'koa-send'
-const slash = require('slash')
+import slash from 'slash'
 const websocket = require('koa-easy-ws')
 import * as path from 'path'
 import { RevealSlides } from './RevealSlides'
