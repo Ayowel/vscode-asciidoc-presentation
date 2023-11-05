@@ -33,7 +33,7 @@ export class Container {
         if(e !== this.revealSlides.editor.document) {
             return
         }
-        
+
         this.disposables.forEach(d => d.dispose())
         this.server.shutdown()
     }

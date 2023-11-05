@@ -11,7 +11,7 @@ export class ContainerManager {
         this.logger = logger
         this.editorContainerMap = new Map()
     }
-    
+
     public checkActiveEditor() {
         return {
             andDo: async (action: (editor: vscode.TextEditor, container: Container) => void) => {

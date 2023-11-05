@@ -45,7 +45,7 @@ function docAccessor(asciidocText: string, docDir: string) {
         getFullAttributes() {
             return doc.getAttributes()
         }
-    } 
+    }
 }
 
 export class RevealSlides {
@@ -92,7 +92,7 @@ export class RevealSlides {
         }
     }
 
-    private getSlideIdUnderCursor (asciidocText: string, lineNumber: number) {    
+    private getSlideIdUnderCursor (asciidocText: string, lineNumber: number) {
         const doc = asciidoctor.load(asciidocText, {safe: 'safe', header_footer: true, sourcemap: true})
 
         try{
@@ -100,7 +100,7 @@ export class RevealSlides {
             if(!sections) {
                 return '' // title slide
             }
-        
+
             const lineInAsciidoc = lineNumber + 1
             const indexOfSectionAfterCursor = sections.findIndex(s => s.getLineNumber() > lineInAsciidoc)
 
@@ -110,7 +110,7 @@ export class RevealSlides {
                 const lastSection = sections ? sections[sections.length-1] : undefined
                 return lastSection ? lastSection.getId() : ''
             }
-        
+
             const currentSection = sections[indexOfSectionAfterCursor - 1]
             const subSections = currentSection.getSections()
 
@@ -119,7 +119,7 @@ export class RevealSlides {
             }
 
             const indexOfSubSectionAfterCursor = subSections.findIndex(ss => ss.getLineNumber() > lineInAsciidoc)
-            
+
             if(indexOfSubSectionAfterCursor === 0) {
                 return currentSection.getId()
             } else if(indexOfSubSectionAfterCursor === -1) {
@@ -170,7 +170,7 @@ export class RevealSlides {
     }
 
     public update() {
-        
+
         this.refreshReferenceToMyEditor()
 
         const asciidocText = this.editor.document.getText()

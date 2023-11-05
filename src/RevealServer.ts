@@ -31,7 +31,7 @@ export class RevealServer {
             .use(websocketMiddleware)
             .use(favicon(path.join(this.extensionPath, 'media/favicon.ico')))
             .use((ctx, next) => this.handler(ctx, next))
-            
+
         render(this.app, {
             root: path.resolve(this.extensionPath, 'views'),
             layout: 'template',
@@ -60,10 +60,10 @@ export class RevealServer {
             ctx.state = this.getExportRenderConfig(false)
             await ctx.render('reveal');
         }
-        else if(ctx.path.startsWith('/libs')) { 
+        else if(ctx.path.startsWith('/libs')) {
             await send(ctx, ctx.path, { root: path.join(this.extensionPath) });
         }
-        else if(ctx.path === '/') { 
+        else if(ctx.path === '/') {
             ctx.state = this.getRenderConfig()
             await ctx.render('reveal');
         } else {
@@ -73,7 +73,7 @@ export class RevealServer {
 
     public getExportRenderConfig (isInlined: boolean) {
         return {
-            slides: this.revealSlides.getSlidesHtmlForExport(isInlined), 
+            slides: this.revealSlides.getSlidesHtmlForExport(isInlined),
             ...this.revealSlides.configuration,
             absolutePath: slash(this.extensionPath) + '/',
             isInlined,
@@ -83,13 +83,13 @@ export class RevealServer {
 
     public getRenderConfig () {
         return {
-            slides: this.revealSlides.revealJsSlidesHtml, 
+            slides: this.revealSlides.revealJsSlidesHtml,
             ...this.revealSlides.configuration,
             websocketUrl: `${this.websocketUrl}/refresh`,
             isPreview: true
         }
     }
-    
+
     public syncCurrentSlideInBrowser(slideId: string) {
         this.websocketServer.clients.forEach(function each(client) {
             if (client.readyState === WebSocket.OPEN) {
@@ -98,7 +98,7 @@ export class RevealServer {
         });
     }
 
-    public get websocketUrl() {    
+    public get websocketUrl() {
         const addr = this.server.address()
 
         if(!addr) {
@@ -108,7 +108,7 @@ export class RevealServer {
         return typeof addr === 'string' ? addr : `ws://localhost:${addr.port}`
     }
 
-    public get serverUrl() {    
+    public get serverUrl() {
         const addr = this.server.address()
 
         if(!addr) {
@@ -118,7 +118,7 @@ export class RevealServer {
         return typeof addr === 'string' ? addr : `http://localhost:${addr.port}`
     }
 
-    public get previewUrl() {    
+    public get previewUrl() {
         return `${this.serverUrl}/#/`
     }
 
